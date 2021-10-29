@@ -1,0 +1,316 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="CloseTicket" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_QueueName" Type="InArgument(x:String)" />
+    <x:Property Name="in_EndPoint" Type="InArgument(x:String)" />
+    <x:Property Name="in_TicketId" Type="InArgument(x:Int32)" />
+    <x:Property Name="out_StatusCodeCloseTicket" Type="OutArgument(x:Int32)" />
+    <x:Property Name="in_KeyValue" Type="InArgument(x:String)" />
+    <x:Property Name="in_DigestTime" Type="InArgument(x:String)" />
+    <x:Property Name="in_Digest" Type="InArgument(x:String)" />
+    <x:Property Name="in_UserName" Type="InArgument(x:String)" />
+    <x:Property Name="in_ResponsibleOrg" Type="InArgument(x:String)" />
+    <x:Property Name="in_ResolutionCodeLevel1" Type="InArgument(x:String)" />
+    <x:Property Name="in_ResolutionCodeLevel2" Type="InArgument(x:String)" />
+    <x:Property Name="in_ResolutionCodeLevel3" Type="InArgument(x:String)" />
+    <x:Property Name="in_ResolutionCodeLevel4" Type="InArgument(x:String)" />
+    <x:Property Name="in_ResolutionCodeLevel5" Type="InArgument(x:String)" />
+    <x:Property Name="in_FixType" Type="InArgument(x:String)" />
+    <x:Property Name="in_FixCode" Type="InArgument(x:String)" />
+    <x:Property Name="in_Status" Type="InArgument(x:String)" />
+    <x:Property Name="in_ResponsibleGroup" Type="InArgument(x:String)" />
+    <x:Property Name="in_Priority" Type="InArgument(x:String)" />
+    <x:Property Name="in_Language" Type="InArgument(x:String)" />
+    <x:Property Name="in_Name" Type="InArgument(x:String)" />
+    <x:Property Name="in_ServiceId" Type="InArgument(x:String)" />
+    <x:Property Name="in_OutageDuration" Type="InArgument(x:String)" />
+    <x:Property Name="in_NextCommUpdate" Type="InArgument(x:String)" />
+  </x:Members>
+  <this:CloseTicket.in_ResponsibleOrg>
+    <InArgument x:TypeArguments="x:String" />
+  </this:CloseTicket.in_ResponsibleOrg>
+  <this:CloseTicket.in_ResolutionCodeLevel1>
+    <InArgument x:TypeArguments="x:String" />
+  </this:CloseTicket.in_ResolutionCodeLevel1>
+  <this:CloseTicket.in_ResolutionCodeLevel2>
+    <InArgument x:TypeArguments="x:String" />
+  </this:CloseTicket.in_ResolutionCodeLevel2>
+  <this:CloseTicket.in_ResolutionCodeLevel3>
+    <InArgument x:TypeArguments="x:String" />
+  </this:CloseTicket.in_ResolutionCodeLevel3>
+  <this:CloseTicket.in_ResolutionCodeLevel4>
+    <InArgument x:TypeArguments="x:String" />
+  </this:CloseTicket.in_ResolutionCodeLevel4>
+  <this:CloseTicket.in_ResolutionCodeLevel5>
+    <InArgument x:TypeArguments="x:String" />
+  </this:CloseTicket.in_ResolutionCodeLevel5>
+  <this:CloseTicket.in_FixType>
+    <InArgument x:TypeArguments="x:String" />
+  </this:CloseTicket.in_FixType>
+  <this:CloseTicket.in_FixCode>
+    <InArgument x:TypeArguments="x:String" />
+  </this:CloseTicket.in_FixCode>
+  <this:CloseTicket.in_ResponsibleGroup>
+    <InArgument x:TypeArguments="x:String" />
+  </this:CloseTicket.in_ResponsibleGroup>
+  <this:CloseTicket.in_NextCommUpdate>
+    <InArgument x:TypeArguments="x:String" />
+  </this:CloseTicket.in_NextCommUpdate>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>1148,1679</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>CloseCase_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <scg:List x:TypeArguments="x:String" Capacity="21">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+    </scg:List>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="22">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>UiPath.CV</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>UiPath.Word</AssemblyReference>
+    </scg:List>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence sap2010:Annotation.AnnotationText="This module closes a ticket at opsConsole." DisplayName="CloseTicket" sap:VirtualizedContainerService.HintSize="1128,1579" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="EndPoint" />
+      <Variable x:TypeArguments="x:String" Name="HTTPResult" />
+      <Variable x:TypeArguments="x:String" Name="Summary" />
+      <Variable x:TypeArguments="x:String" Name="SummaryPOR" />
+      <Variable x:TypeArguments="x:String" Name="SummaryENG" />
+      <Variable x:TypeArguments="x:String" Name="SummaryESP" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="1086,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Starting&quot;]" />
+    <Sequence DisplayName="Summary" sap:VirtualizedContainerService.HintSize="1086,944" sap2010:WorkflowViewState.IdRef="Sequence_3">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <Assign sap:VirtualizedContainerService.HintSize="1044,64" sap2010:WorkflowViewState.IdRef="Assign_11">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[SummaryPOR]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String" xml:space="preserve">["Prezado Cliente; "+Environment.NewLine+Environment.NewLine+
+"Lumen informa sobre o encerramento do Ticket Potencial Trouble "+in_TicketId.ToString+" que foi aberto pelo nosso processo. "+Environment.NewLine+Environment.NewLine+
+"Endereço Impactado: "+in_Name.ToString+Environment.NewLine+
+"Tipo de Incidente: "+in_Priority.ToString+Environment.NewLine+
+"Service Identifier: "+in_ServiceId.ToString+Environment.NewLine+
+"Outage Duration: "+in_OutageDuration.ToString+" minutos "+Environment.NewLine+
+"Responsabilidade: Customer "+Environment.NewLine+
+"Root Cause: Falha de energia elétrica no local. "+Environment.NewLine+Environment.NewLine+
+"Após o monitoramento do serviço, constatou-se operativo e se procedeu o encerramento do caso. "+Environment.NewLine+
+"Nos próximos dias, você receberá uma breve pesquisa de satisfação. Sua opinião nos ajudará a melhorar sua experiência como Cliente. "+Environment.NewLine+
+"Diante de qualquer dúvida, não hesite em contatar-nos.  "+Environment.NewLine+Environment.NewLine+
+"Network Management - Lumen"]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <Assign sap:VirtualizedContainerService.HintSize="1044,64" sap2010:WorkflowViewState.IdRef="Assign_5">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[SummaryESP]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String" xml:space="preserve">["Estimado cliente; "+Environment.NewLine+Environment.NewLine+
+"Lumen informa sobre el cierre del Ticket Potenial Trouble "+in_TicketId.ToString+" que fue abierto por nuestro proceso. "+Environment.NewLine+Environment.NewLine+
+"Dirección afectada: "+in_Name.ToString+Environment.NewLine+
+"Tipo de Incidente: "+in_Priority.ToString+Environment.NewLine+
+"Service Identifier: "+in_ServiceId.ToString+Environment.NewLine+
+"Outage Duration: "+in_OutageDuration.ToString+" minutos "+Environment.NewLine+
+"Responsabilidad: Cliente "+Environment.NewLine+
+"Root Cause: Falla de energía en el sitio. "+Environment.NewLine+Environment.NewLine+
+"Después de monitorear el servicio, se encontró que estaba operativo y el caso se cerró. "+Environment.NewLine+
+"En los próximos días recibirás una breve encuesta de satisfacción. Tu opinión nos ayudará a mejorar tu experiencia como Cliente. "+Environment.NewLine+
+"En caso de cualquier duda, no dude en contactarnos.  "+Environment.NewLine+Environment.NewLine+
+"Network Management - Lumen"]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <Assign sap:VirtualizedContainerService.HintSize="1044,64" sap2010:WorkflowViewState.IdRef="Assign_6">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[SummaryENG]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String" xml:space="preserve">["Dear Customer; "+Environment.NewLine+Environment.NewLine+
+"Lumen informs about the closure of the Ticket Potential Trouble "+in_TicketId.ToString+" that was opened by our process. "+Environment.NewLine+Environment.NewLine+
+"Impacted Address: "+in_Name.ToString+Environment.NewLine+
+"Incident Type: "+in_Priority.ToString+Environment.NewLine+
+"Service Identifier: "+in_ServiceId.ToString+Environment.NewLine+
+"Outage Duration: "+in_OutageDuration.ToString+" minutes "+Environment.NewLine+
+"Responsibility: Customer "+Environment.NewLine+
+"Root Cause: Power failure at the site. "+Environment.NewLine+Environment.NewLine+
+"After monitoring the service, it was found to be operational and the case was closed. "+Environment.NewLine+
+"In the coming days, you will receive a brief satisfaction survey. Your opinion will help us improve your experience as a Customer. "+Environment.NewLine+
+"In case of any doubt, do not hesitate to contact us.  "+Environment.NewLine+Environment.NewLine+
+"Network Management - Lumen"]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <If Condition="[in_Language.Contains(&quot;*FEP*&quot;)]" sap:VirtualizedContainerService.HintSize="1044,540" sap2010:WorkflowViewState.IdRef="If_1">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <If.Then>
+          <Sequence sap:VirtualizedContainerService.HintSize="304,152" sap2010:WorkflowViewState.IdRef="Sequence_4">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_3">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[Summary]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[SummaryPOR]</InArgument>
+              </Assign.Value>
+            </Assign>
+          </Sequence>
+        </If.Then>
+        <If.Else>
+          <Sequence sap:VirtualizedContainerService.HintSize="695,392" sap2010:WorkflowViewState.IdRef="Sequence_5">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If Condition="[in_Language.Contains(&quot;*FEE*&quot;)]" sap:VirtualizedContainerService.HintSize="653,300" sap2010:WorkflowViewState.IdRef="If_2">
+              <If.Then>
+                <Sequence sap:VirtualizedContainerService.HintSize="304,152" sap2010:WorkflowViewState.IdRef="Sequence_6">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_7">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:String">[Summary]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:String">[SummaryESP]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                </Sequence>
+              </If.Then>
+              <If.Else>
+                <Sequence sap:VirtualizedContainerService.HintSize="304,152" sap2010:WorkflowViewState.IdRef="Sequence_7">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_8">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:String">[Summary]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:String">[SummaryENG]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                </Sequence>
+              </If.Else>
+            </If>
+          </Sequence>
+        </If.Else>
+      </If>
+    </Sequence>
+    <Sequence DisplayName="HTTP Request" sap:VirtualizedContainerService.HintSize="1086,214" sap2010:WorkflowViewState.IdRef="Sequence_2">
+      <Sequence.Variables>
+        <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" Name="Headers" />
+      </Sequence.Variables>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_1">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[EndPoint]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">[in_EndPoint+in_TicketId.ToString+"/closeCase"]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <ui:HttpClient Body="{x:Null}" ConsumerKey="{x:Null}" ConsumerSecret="{x:Null}" ContinueOnError="{x:Null}" OAuth1Token="{x:Null}" OAuth1TokenSecret="{x:Null}" OAuth2Token="{x:Null}" Password="{x:Null}" ResourcePath="{x:Null}" Username="{x:Null}" AcceptFormat="JSON" BodyFormat="application/json" ClientCertificate="[Nothing]" ClientCertificatePassword="[Nothing]" DisplayName="HTTP Request" EndPoint="[EndPoint]" sap:VirtualizedContainerService.HintSize="262,22" sap2010:WorkflowViewState.IdRef="HttpClient_1" Method="POST" ResponseHeaders="[Headers]" Result="[HTTPResult]" StatusCode="[out_StatusCodeCloseTicket]" TimeoutMS="6000">
+        <ui:HttpClient.Attachments>
+          <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
+        </ui:HttpClient.Attachments>
+        <ui:HttpClient.Cookies>
+          <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
+        </ui:HttpClient.Cookies>
+        <ui:HttpClient.Headers>
+          <InArgument x:TypeArguments="x:String" x:Key="X-Level3-Application-Key">[in_KeyValue]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="X-Level3-Digest-Time">[in_DigestTime]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="X-Level3-Digest">[in_Digest]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="X-Level3-Username">[in_UserName]</InArgument>
+        </ui:HttpClient.Headers>
+        <ui:HttpClient.Parameters>
+          <InArgument x:TypeArguments="x:String" x:Key="status">[in_Status]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="responsibleOrg">[in_ResponsibleOrg]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="resolutionCodeLevel1">[in_ResolutionCodeLevel1]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="resolutionCodeLevel2">[in_ResolutionCodeLevel2]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="resolutionCodeLevel3">[in_ResolutionCodeLevel3]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="resolutionCodeLevel4">[in_ResolutionCodeLevel4]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="resolutionCodeLevel5">[in_ResolutionCodeLevel5]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="summary">[Summary]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="fixType">[in_FixType]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="fixCode">[in_FixCode]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="responsibleGroup">[in_ResponsibleGroup]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="nextCommUpdate">[in_NextCommUpdate]</InArgument>
+        </ui:HttpClient.Parameters>
+        <ui:HttpClient.UrlSegments>
+          <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
+        </ui:HttpClient.UrlSegments>
+      </ui:HttpClient>
+    </Sequence>
+    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="1086,91" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Ending&quot;]" />
+  </Sequence>
+</Activity>
