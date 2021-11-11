@@ -1,21 +1,17 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Escalation_Ticket" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:njl="clr-namespace:Newtonsoft.Json.Linq;assembly=Newtonsoft.Json" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Escalation_Ticket" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:njl="clr-namespace:Newtonsoft.Json.Linq;assembly=Newtonsoft.Json" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="in_TicketsIdEscalationTicket" Type="InArgument(x:Int32)" />
     <x:Property Name="in_DicConfigEscalationTicket" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
     <x:Property Name="in_ActionEscalationTicket" Type="InArgument(x:String)" />
-    <x:Property Name="out_DateEscalationTicket" Type="OutArgument(s:DateTime)" />
-    <x:Property Name="out_KeyEscalationTicket" Type="OutArgument(x:Int32)" />
-    <x:Property Name="out_UserNameEscalationTicket" Type="OutArgument(x:String)" />
-    <x:Property Name="out_FromEscalationTicket" Type="OutArgument(x:String)" />
-    <x:Property Name="out_ToEscalationTicket" Type="OutArgument(x:String)" />
+    <x:Property Name="out_DataTableEscalationTicket" Type="OutArgument(sd:DataTable)" />
   </x:Members>
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>956,2372</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1154,3408</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivtyLogEntriesTicket_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
-    <scg:List x:TypeArguments="x:String" Capacity="25">
+    <scg:List x:TypeArguments="x:String" Capacity="30">
       <x:String>System.Activities</x:String>
       <x:String>System.Activities.Statements</x:String>
       <x:String>System.Activities.Expressions</x:String>
@@ -41,6 +37,11 @@
       <x:String>Newtonsoft.Json</x:String>
       <x:String>Microsoft.VisualBasic.CompilerServices</x:String>
       <x:String>System.Text.RegularExpressions</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.ComponentModel</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>System.Activities.DynamicUpdate</x:String>
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -67,10 +68,10 @@
       <AssemblyReference>UiPath.Word</AssemblyReference>
       <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
       <AssemblyReference>Newtonsoft.Json</AssemblyReference>
-      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="Escalation Ticket" sap:VirtualizedContainerService.HintSize="936,2272" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="Escalation Ticket" sap:VirtualizedContainerService.HintSize="1112,3343" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="KeyValue" />
       <Variable x:TypeArguments="x:String" Name="Digest" />
@@ -88,13 +89,18 @@
       <Variable x:TypeArguments="x:String" Name="Action" />
       <Variable x:TypeArguments="x:String" Name="Information" />
       <Variable x:TypeArguments="x:String" Name="Result1" />
+      <Variable x:TypeArguments="x:Int32" Name="KeyEscalation" />
+      <Variable x:TypeArguments="s:DateTime" Name="EscalationDate" />
+      <Variable x:TypeArguments="x:String" Name="FromEscalation" />
+      <Variable x:TypeArguments="x:String" Name="ToEscalation" />
+      <Variable x:TypeArguments="x:String" Name="UserNameEscalation" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log message" sap:VirtualizedContainerService.HintSize="894,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Starting Escalation Ticket&quot;]">
+    <ui:LogMessage DisplayName="Log message" sap:VirtualizedContainerService.HintSize="1070,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Starting Escalation Ticket&quot;]">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -102,7 +108,17 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </ui:LogMessage>
-    <Sequence DisplayName="DicConfig" sap:VirtualizedContainerService.HintSize="894,66" sap2010:WorkflowViewState.IdRef="Sequence_2">
+    <Sequence DisplayName="Data Table" sap:VirtualizedContainerService.HintSize="1070,66" sap2010:WorkflowViewState.IdRef="Sequence_34">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <ui:BuildDataTable DataTable="[out_DataTableEscalationTicket]" DisplayName="Build Data Table" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="BuildDataTable_2" TableInfo="&lt;NewDataSet&gt;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xA;      &lt;xs:complexType&gt;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xA;            &lt;xs:complexType&gt;&#xA;              &lt;xs:sequence&gt;&#xA;                &lt;xs:element name=&quot;TicketID&quot; msdata:Caption=&quot;&quot; type=&quot;xs:int&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;KeyEscalation&quot; msdata:Caption=&quot;&quot; type=&quot;xs:int&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;EscalationDate&quot; msdata:Caption=&quot;&quot; type=&quot;xs:dateTime&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;UserNameEscalation&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;FromEscalation&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;ToEscalation&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;              &lt;/xs:sequence&gt;&#xA;            &lt;/xs:complexType&gt;&#xA;          &lt;/xs:element&gt;&#xA;        &lt;/xs:choice&gt;&#xA;      &lt;/xs:complexType&gt;&#xA;    &lt;/xs:element&gt;&#xA;  &lt;/xs:schema&gt;&#xA;&lt;/NewDataSet&gt;" />
+      <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_32" Level="Info" Message="[&quot;Data Table =&quot;+out_DataTableEscalationTicket.ToString]" />
+    </Sequence>
+    <Sequence DisplayName="DicConfig" sap:VirtualizedContainerService.HintSize="1070,66" sap2010:WorkflowViewState.IdRef="Sequence_2">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -160,7 +176,7 @@
       </Assign>
       <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[EndPoint.ToString]" />
     </Sequence>
-    <Sequence DisplayName="HTTP Request" sap:VirtualizedContainerService.HintSize="894,114" sap2010:WorkflowViewState.IdRef="Sequence_3">
+    <Sequence DisplayName="HTTP Request" sap:VirtualizedContainerService.HintSize="1070,114" sap2010:WorkflowViewState.IdRef="Sequence_3">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -188,14 +204,14 @@
         </ui:HttpClient.UrlSegments>
       </ui:HttpClient>
     </Sequence>
-    <Sequence DisplayName="HTTP Result" sap:VirtualizedContainerService.HintSize="894,1658" sap2010:WorkflowViewState.IdRef="Sequence_9">
+    <Sequence DisplayName="HTTP Result" sap:VirtualizedContainerService.HintSize="1070,2623" sap2010:WorkflowViewState.IdRef="Sequence_9">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           <x:Boolean x:Key="IsPinned">False</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <If Condition="[StatusCode = 200]" DisplayName="If HTTP Response" sap:VirtualizedContainerService.HintSize="852,1566" sap2010:WorkflowViewState.IdRef="If_1">
+      <If Condition="[StatusCode = 200]" DisplayName="If HTTP Response" sap:VirtualizedContainerService.HintSize="1028,2531" sap2010:WorkflowViewState.IdRef="If_1">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -203,13 +219,13 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
         <If.Then>
-          <Sequence sap:VirtualizedContainerService.HintSize="607,1418" sap2010:WorkflowViewState.IdRef="Sequence_7">
+          <Sequence sap:VirtualizedContainerService.HintSize="783,2383" sap2010:WorkflowViewState.IdRef="Sequence_7">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <Sequence DisplayName="Activity Log List" sap:VirtualizedContainerService.HintSize="565,66" sap2010:WorkflowViewState.IdRef="Sequence_4">
+            <Sequence DisplayName="Activity Log List" sap:VirtualizedContainerService.HintSize="741,66" sap2010:WorkflowViewState.IdRef="Sequence_4">
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -234,19 +250,19 @@
               </Assign>
               <ui:DeserializeJsonArray DisplayName="Deserialize JSON Array" sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="DeserializeJsonArray_1" JsonArray="[JsonArray]" JsonString="[JsonStringArray]" />
             </Sequence>
-            <ui:ForEach x:TypeArguments="njl:JObject" CurrentIndex="[Index]" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="565,1220" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[JsonArray]">
+            <ui:ForEach x:TypeArguments="njl:JObject" CurrentIndex="[Index]" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="741,2185" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[JsonArray]">
               <ui:ForEach.Body>
                 <ActivityAction x:TypeArguments="njl:JObject">
                   <ActivityAction.Argument>
                     <DelegateInArgument x:TypeArguments="njl:JObject" Name="item" />
                   </ActivityAction.Argument>
-                  <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="529,1086" sap2010:WorkflowViewState.IdRef="Sequence_6">
+                  <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="705,2051" sap2010:WorkflowViewState.IdRef="Sequence_6">
                     <sap:WorkflowViewStateService.ViewState>
                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
                         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
-                    <Sequence DisplayName="Action" sap:VirtualizedContainerService.HintSize="487,66" sap2010:WorkflowViewState.IdRef="Sequence_5">
+                    <Sequence DisplayName="Action" sap:VirtualizedContainerService.HintSize="663,66" sap2010:WorkflowViewState.IdRef="Sequence_5">
                       <sap:WorkflowViewStateService.ViewState>
                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
                           <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -263,7 +279,7 @@
                       </Assign>
                       <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_14" Level="Info" Message="[Action.ToString]" />
                     </Sequence>
-                    <If Condition="[Action = in_ActionEscalationTicket]" DisplayName="If Dispatch" sap:VirtualizedContainerService.HintSize="487,757" sap2010:WorkflowViewState.IdRef="If_3">
+                    <If Condition="[Action.Trim.ToString.Equals(in_ActionEscalationTicket.Trim)]" DisplayName="If Dispatch" sap:VirtualizedContainerService.HintSize="663,1722" sap2010:WorkflowViewState.IdRef="If_3">
                       <sap:WorkflowViewStateService.ViewState>
                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
                           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -271,20 +287,20 @@
                         </scg:Dictionary>
                       </sap:WorkflowViewStateService.ViewState>
                       <If.Then>
-                        <Sequence sap:VirtualizedContainerService.HintSize="242,609" sap2010:WorkflowViewState.IdRef="Sequence_27">
+                        <Sequence sap:VirtualizedContainerService.HintSize="418,1574" sap2010:WorkflowViewState.IdRef="Sequence_27">
                           <sap:WorkflowViewStateService.ViewState>
                             <scg:Dictionary x:TypeArguments="x:String, x:Object">
                               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                             </scg:Dictionary>
                           </sap:WorkflowViewStateService.ViewState>
-                          <Sequence DisplayName="Information" sap:VirtualizedContainerService.HintSize="200,66" sap2010:WorkflowViewState.IdRef="Sequence_12">
+                          <Sequence DisplayName="Information" sap:VirtualizedContainerService.HintSize="376,66" sap2010:WorkflowViewState.IdRef="Sequence_12">
                             <sap:WorkflowViewStateService.ViewState>
                               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                 <x:Boolean x:Key="IsExpanded">False</x:Boolean>
                                 <x:Boolean x:Key="IsPinned">False</x:Boolean>
                               </scg:Dictionary>
                             </sap:WorkflowViewStateService.ViewState>
-                            <Assign sap:VirtualizedContainerService.HintSize="436,60" sap2010:WorkflowViewState.IdRef="Assign_14">
+                            <Assign sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_14">
                               <Assign.To>
                                 <OutArgument x:TypeArguments="x:String">[Information]</OutArgument>
                               </Assign.To>
@@ -292,36 +308,17 @@
                                 <InArgument x:TypeArguments="x:String">[item("information").ToString]</InArgument>
                               </Assign.Value>
                             </Assign>
-                            <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="436,230" sap2010:WorkflowViewState.IdRef="CommentOut_2">
-                              <ui:CommentOut.Body>
-                                <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="304,152" sap2010:WorkflowViewState.IdRef="Sequence_31">
-                                  <sap:WorkflowViewStateService.ViewState>
-                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                                    </scg:Dictionary>
-                                  </sap:WorkflowViewStateService.ViewState>
-                                  <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_20">
-                                    <Assign.To>
-                                      <OutArgument x:TypeArguments="x:String">[Information]</OutArgument>
-                                    </Assign.To>
-                                    <Assign.Value>
-                                      <InArgument x:TypeArguments="x:String">Escalation Status Change from TCAM to Level 1</InArgument>
-                                    </Assign.Value>
-                                  </Assign>
-                                </Sequence>
-                              </ui:CommentOut.Body>
-                            </ui:CommentOut>
-                            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="436,91" sap2010:WorkflowViewState.IdRef="LogMessage_15" Level="Info" Message="[&quot;Information = &quot;+Information.ToString]" />
+                            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_15" Level="Info" Message="[&quot;Information = &quot;+Information.ToString]" />
                           </Sequence>
-                          <Sequence sap2010:Annotation.AnnotationText="" DisplayName="Escalation" sap:VirtualizedContainerService.HintSize="200,93" sap2010:WorkflowViewState.IdRef="Sequence_29">
+                          <Sequence sap2010:Annotation.AnnotationText="" DisplayName="Escalation" sap:VirtualizedContainerService.HintSize="376,773" sap2010:WorkflowViewState.IdRef="Sequence_29">
                             <sap:WorkflowViewStateService.ViewState>
                               <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                 <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
                                 <x:Boolean x:Key="IsPinned">False</x:Boolean>
                               </scg:Dictionary>
                             </sap:WorkflowViewStateService.ViewState>
-                            <ui:Replace BuilderPattern="^Escalation\sStatus\sChange\sfrom\s" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="Replace_1" Input="[Information]" IsBuilderTabModified="True" Model="[{&quot;Index&quot;:0,&quot;OperationID&quot;:&quot;ST&quot;,&quot;OperationName&quot;:&quot;Starts with&quot;,&quot;OperationValue&quot;:&quot;^&quot;,&quot;QuantifierFirstValue&quot;:&quot;1&quot;,&quot;QuantifierID&quot;:&quot;EXT&quot;,&quot;QuantifierName&quot;:&quot;Exactly&quot;,&quot;QuantifierSecondValue&quot;:null},{&quot;Index&quot;:1,&quot;OperationID&quot;:&quot;LIT&quot;,&quot;OperationName&quot;:&quot;Literal&quot;,&quot;OperationValue&quot;:&quot;Escalation\\sStatus\\sChange\\sfrom\\s&quot;,&quot;QuantifierFirstValue&quot;:&quot;1&quot;,&quot;QuantifierID&quot;:&quot;EXT&quot;,&quot;QuantifierName&quot;:&quot;Exactly&quot;,&quot;QuantifierSecondValue&quot;:null}]" Pattern="^Escalation\sStatus\sChange\sfrom\s" RegexOption="IgnoreCase" Result="[Result1]">
+                            <ui:Replace BuilderPattern="^Escalation\sStatus\sChange\sfrom\s" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="Replace_1" Input="[Information]" IsBuilderTabModified="True" Model="[{&quot;Index&quot;:0,&quot;OperationID&quot;:&quot;ST&quot;,&quot;OperationName&quot;:&quot;Starts with&quot;,&quot;OperationValue&quot;:&quot;^&quot;,&quot;QuantifierFirstValue&quot;:&quot;1&quot;,&quot;QuantifierID&quot;:&quot;EXT&quot;,&quot;QuantifierName&quot;:&quot;Exactly&quot;,&quot;QuantifierSecondValue&quot;:null},{&quot;Index&quot;:1,&quot;OperationID&quot;:&quot;LIT&quot;,&quot;OperationName&quot;:&quot;Literal&quot;,&quot;OperationValue&quot;:&quot;Escalation\\sStatus\\sChange\\sfrom\\s&quot;,&quot;QuantifierFirstValue&quot;:&quot;1&quot;,&quot;QuantifierID&quot;:&quot;EXT&quot;,&quot;QuantifierName&quot;:&quot;Exactly&quot;,&quot;QuantifierSecondValue&quot;:null}]" Pattern="^\w{10,}\s\w{6,}\s\w{6,}\s\w{4,}\s" RegexOption="IgnoreCase" Result="[Result1]">
                               <ui:Replace.Replacement>
                                 <InArgument x:TypeArguments="x:String">
                                   <Literal x:TypeArguments="x:String" Value="" />
@@ -329,24 +326,24 @@
                               </ui:Replace.Replacement>
                             </ui:Replace>
                             <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_26" Level="Info" Message="[&quot;Result1 = &quot;+Result1.ToString]" />
-                            <ui:Replace BuilderPattern="\s.*$" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="Replace_2" Input="[Result1]" IsBuilderTabModified="True" Model="[{&quot;Index&quot;:0,&quot;OperationID&quot;:&quot;ADV&quot;,&quot;OperationName&quot;:&quot;Advanced&quot;,&quot;OperationValue&quot;:&quot;\\s.*$&quot;,&quot;QuantifierFirstValue&quot;:&quot;1&quot;,&quot;QuantifierID&quot;:&quot;EXT&quot;,&quot;QuantifierName&quot;:&quot;Exactly&quot;,&quot;QuantifierSecondValue&quot;:null}]" Pattern="\s.*$" RegexOption="IgnoreCase" Result="[out_FromEscalationTicket]">
+                            <ui:Replace BuilderPattern="" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="Replace_2" Input="[Result1]" IsBuilderTabModified="True" Model="[{&quot;Index&quot;:0,&quot;OperationID&quot;:&quot;ADV&quot;,&quot;OperationName&quot;:&quot;Advanced&quot;,&quot;OperationValue&quot;:&quot;&quot;,&quot;QuantifierFirstValue&quot;:&quot;1&quot;,&quot;QuantifierID&quot;:&quot;EXT&quot;,&quot;QuantifierName&quot;:&quot;Exactly&quot;,&quot;QuantifierSecondValue&quot;:null}]" Pattern="\s\w{2,}\s\w{5,}\s\d{1,}$" RegexOption="IgnoreCase" Result="[FromEscalation]">
                               <ui:Replace.Replacement>
                                 <InArgument x:TypeArguments="x:String">
                                   <Literal x:TypeArguments="x:String" Value="" />
                                 </InArgument>
                               </ui:Replace.Replacement>
                             </ui:Replace>
-                            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_27" Level="Info" Message="[&quot;From = &quot;+out_FromEscalationTicket.ToString]" />
-                            <ui:Replace BuilderPattern="^.*\sto\s" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="Replace_3" Input="[Result1]" IsBuilderTabModified="True" Model="[{&quot;Index&quot;:0,&quot;OperationID&quot;:&quot;ST&quot;,&quot;OperationName&quot;:&quot;Starts with&quot;,&quot;OperationValue&quot;:&quot;^&quot;,&quot;QuantifierFirstValue&quot;:&quot;1&quot;,&quot;QuantifierID&quot;:&quot;EXT&quot;,&quot;QuantifierName&quot;:&quot;Exactly&quot;,&quot;QuantifierSecondValue&quot;:null},{&quot;Index&quot;:1,&quot;OperationID&quot;:&quot;LIT&quot;,&quot;OperationName&quot;:&quot;Literal&quot;,&quot;OperationValue&quot;:&quot;.*\\sto\\s&quot;,&quot;QuantifierFirstValue&quot;:&quot;1&quot;,&quot;QuantifierID&quot;:&quot;EXT&quot;,&quot;QuantifierName&quot;:&quot;Exactly&quot;,&quot;QuantifierSecondValue&quot;:null}]" Pattern="^.*\sto\s" RegexOption="IgnoreCase" Result="[out_ToEscalationTicket]">
+                            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_27" Level="Info" Message="[&quot;From = &quot;+FromEscalation.ToString]" />
+                            <ui:Replace BuilderPattern="" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="Replace_3" Input="[Result1]" IsBuilderTabModified="True" Model="[{&quot;Index&quot;:0,&quot;OperationID&quot;:&quot;ADV&quot;,&quot;OperationName&quot;:&quot;Advanced&quot;,&quot;OperationValue&quot;:&quot;&quot;,&quot;QuantifierFirstValue&quot;:&quot;1&quot;,&quot;QuantifierID&quot;:&quot;EXT&quot;,&quot;QuantifierName&quot;:&quot;Exactly&quot;,&quot;QuantifierSecondValue&quot;:null}]" Pattern="^\w{5,}\s\d{1,}\s\w{2,}\s|^\w{4,}\s\w{2,}\s" RegexOption="IgnoreCase" Result="[ToEscalation]">
                               <ui:Replace.Replacement>
                                 <InArgument x:TypeArguments="x:String">
                                   <Literal x:TypeArguments="x:String" Value="" />
                                 </InArgument>
                               </ui:Replace.Replacement>
                             </ui:Replace>
-                            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_29" Level="Info" Message="[&quot;To = &quot;+out_ToEscalationTicket.ToString]" />
+                            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_29" Level="Info" Message="[&quot;To = &quot;+ToEscalation.ToString]" />
                           </Sequence>
-                          <Sequence DisplayName="Date" sap:VirtualizedContainerService.HintSize="200,66" sap2010:WorkflowViewState.IdRef="Sequence_32">
+                          <Sequence DisplayName="Date" sap:VirtualizedContainerService.HintSize="376,66" sap2010:WorkflowViewState.IdRef="Sequence_32">
                             <sap:WorkflowViewStateService.ViewState>
                               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                 <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -355,15 +352,15 @@
                             </sap:WorkflowViewStateService.ViewState>
                             <Assign sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_21">
                               <Assign.To>
-                                <OutArgument x:TypeArguments="s:DateTime">[out_DateEscalationTicket]</OutArgument>
+                                <OutArgument x:TypeArguments="s:DateTime">[EscalationDate]</OutArgument>
                               </Assign.To>
                               <Assign.Value>
                                 <InArgument x:TypeArguments="s:DateTime">[Convert.ToDateTime(item("date").ToString).ToUniversalTime]</InArgument>
                               </Assign.Value>
                             </Assign>
-                            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_30" Level="Info" Message="[&quot;Date = &quot;+out_DateEscalationTicket.ToString]" />
+                            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_30" Level="Info" Message="[&quot;Date = &quot;+EscalationDate.ToString]" />
                           </Sequence>
-                          <Sequence DisplayName="Key" sap:VirtualizedContainerService.HintSize="200,66" sap2010:WorkflowViewState.IdRef="Sequence_26">
+                          <Sequence DisplayName="Key" sap:VirtualizedContainerService.HintSize="376,66" sap2010:WorkflowViewState.IdRef="Sequence_26">
                             <sap:WorkflowViewStateService.ViewState>
                               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                 <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -372,15 +369,15 @@
                             </sap:WorkflowViewStateService.ViewState>
                             <Assign sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_18">
                               <Assign.To>
-                                <OutArgument x:TypeArguments="x:Int32">[out_KeyEscalationTicket]</OutArgument>
+                                <OutArgument x:TypeArguments="x:Int32">[KeyEscalation]</OutArgument>
                               </Assign.To>
                               <Assign.Value>
                                 <InArgument x:TypeArguments="x:Int32">[Cint(item("key"))]</InArgument>
                               </Assign.Value>
                             </Assign>
-                            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_23" Level="Info" Message="[&quot;Key = &quot;+out_KeyEscalationTicket.ToString]" />
+                            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_23" Level="Info" Message="[&quot;Key = &quot;+KeyEscalation.ToString]" />
                           </Sequence>
-                          <Sequence DisplayName="User Name" sap:VirtualizedContainerService.HintSize="200,66" sap2010:WorkflowViewState.IdRef="Sequence_28">
+                          <Sequence DisplayName="User Name" sap:VirtualizedContainerService.HintSize="376,66" sap2010:WorkflowViewState.IdRef="Sequence_28">
                             <sap:WorkflowViewStateService.ViewState>
                               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                 <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -389,13 +386,23 @@
                             </sap:WorkflowViewStateService.ViewState>
                             <Assign sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_19">
                               <Assign.To>
-                                <OutArgument x:TypeArguments="x:String">[out_UserNameEscalationTicket]</OutArgument>
+                                <OutArgument x:TypeArguments="x:String">[UserNameEscalation]</OutArgument>
                               </Assign.To>
                               <Assign.Value>
                                 <InArgument x:TypeArguments="x:String">[item("userName").ToString]</InArgument>
                               </Assign.Value>
                             </Assign>
-                            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_24" Level="Info" Message="[&quot;User Name = &quot;+out_UserNameEscalationTicket.ToString]" />
+                            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_24" Level="Info" Message="[&quot;User Name = &quot;+UserNameEscalation.ToString]" />
+                          </Sequence>
+                          <Sequence DisplayName="Data Table" sap:VirtualizedContainerService.HintSize="376,245" sap2010:WorkflowViewState.IdRef="Sequence_33">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{in_TicketsIdEscalationTicket,KeyEscalation,EscalationDate,UserNameEscalation,FromEscalation,ToEscalation}]" DataTable="[out_DataTableEscalationTicket]" DisplayName="Add Data Row" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="AddDataRow_1" />
+                            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_31" Level="Info" Message="[&quot;Data Table =&quot;+out_DataTableEscalationTicket.ToString]" />
                           </Sequence>
                         </Sequence>
                       </If.Then>
@@ -410,7 +417,7 @@
                         </Sequence>
                       </If.Else>
                     </If>
-                    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="487,91" sap2010:WorkflowViewState.IdRef="LogMessage_17" Level="Info" Message="[Index.ToString]" />
+                    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="663,91" sap2010:WorkflowViewState.IdRef="LogMessage_17" Level="Info" Message="[Index.ToString]" />
                   </Sequence>
                 </ActivityAction>
               </ui:ForEach.Body>
