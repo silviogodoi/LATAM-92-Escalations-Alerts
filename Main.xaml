@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Main" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Main" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="out_TicketIDCheckTicket" Type="OutArgument(x:Int32)" />
     <x:Property Name="out_TicketsIdTicketSearch" Type="OutArgument(x:Int32)" />
@@ -14,7 +14,7 @@
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>814,738</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1154,775</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>Main2_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="26">
@@ -47,7 +47,7 @@
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
-    <scg:List x:TypeArguments="AssemblyReference" Capacity="28">
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="56">
       <AssemblyReference>System.Activities</AssemblyReference>
       <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
       <AssemblyReference>mscorlib</AssemblyReference>
@@ -75,6 +75,9 @@
       <AssemblyReference>System.Memory</AssemblyReference>
       <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
       <AssemblyReference>UiPath.Word</AssemblyReference>
+      <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
+      <AssemblyReference>UiPath.OCR.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
       <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
@@ -397,9 +400,9 @@
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
           <Transition.To>
-            <State x:Name="__ReferenceID2" sap2010:Annotation.AnnotationText="Perform the necessary business logic on the transaction item" DisplayName="Process Single Transaction Item" sap:VirtualizedContainerService.HintSize="290,103" sap2010:WorkflowViewState.IdRef="State_3">
+            <State x:Name="__ReferenceID2" sap2010:Annotation.AnnotationText="Perform the necessary business logic on the transaction item" DisplayName="Process Single Transaction Item" sap:VirtualizedContainerService.HintSize="484,1546" sap2010:WorkflowViewState.IdRef="State_3">
               <State.Entry>
-                <TryCatch DisplayName="Process Transaction" sap:VirtualizedContainerService.HintSize="438,910" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+                <TryCatch DisplayName="Process Transaction" sap:VirtualizedContainerService.HintSize="438,939" sap2010:WorkflowViewState.IdRef="TryCatch_1">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -407,14 +410,14 @@
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
                   <TryCatch.Try>
-                    <Sequence DisplayName="Process the current TransactionItem" sap:VirtualizedContainerService.HintSize="376,661" sap2010:WorkflowViewState.IdRef="Sequence_2">
+                    <Sequence DisplayName="Process the current TransactionItem" sap:VirtualizedContainerService.HintSize="376,690" sap2010:WorkflowViewState.IdRef="Sequence_2">
                       <sap:WorkflowViewStateService.ViewState>
                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
                           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                           <x:Boolean x:Key="IsPinned">False</x:Boolean>
                         </scg:Dictionary>
                       </sap:WorkflowViewStateService.ViewState>
-                      <ui:AddLogFields sap2010:Annotation.AnnotationText="Add logF_StateName field" DisplayName="Add log fields" sap:VirtualizedContainerService.HintSize="334,49" sap2010:WorkflowViewState.IdRef="AddLogFields_7">
+                      <ui:AddLogFields sap2010:Annotation.AnnotationText="Add logF_StateName field" DisplayName="Add log fields" sap:VirtualizedContainerService.HintSize="334,53" sap2010:WorkflowViewState.IdRef="AddLogFields_7">
                         <ui:AddLogFields.Fields>
                           <InArgument x:TypeArguments="x:String" x:Key="logF_StateName">Process Single Transaction Item</InArgument>
                         </ui:AddLogFields.Fields>
@@ -441,29 +444,44 @@
                           <InArgument x:TypeArguments="s:Exception">[Nothing]</InArgument>
                         </Assign.Value>
                       </Assign>
-                      <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke ProcessTransaction workflow" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_9" UnSafe="False" WorkflowFileName="Process.xaml">
+                      <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke ProcessTransaction workflow" sap:VirtualizedContainerService.HintSize="334,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_9" UnSafe="False" WorkflowFileName="Process.xaml">
                         <ui:InvokeWorkflowFile.Arguments>
-                          <InArgument x:TypeArguments="x:Int32" x:Key="in_TransactionItem">[dictCurrentTransactionItem]</InArgument>
-                          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[dictConfig]</InArgument>
-                          <OutArgument x:TypeArguments="x:Int32" x:Key="out_StatusCode_ReadTicket">[StatusCode_ReadTicket]</OutArgument>
-                          <OutArgument x:TypeArguments="x:Int32" x:Key="out_StatusCode_CloseTicket">[StatusCode_CloseTicket]</OutArgument>
-                          <InArgument x:TypeArguments="x:String" x:Key="in_Language_Load">[Severity_LoadSingle]</InArgument>
-                          <OutArgument x:TypeArguments="x:Int32" x:Key="out_StatusCodeReports">[StatusCodeReports]</OutArgument>
+                          <InArgument x:TypeArguments="x:Int32" x:Key="in_TransactionItem">
+                            <mva:VisualBasicValue x:TypeArguments="x:Int32" ExpressionText="dictCurrentTransactionItem" />
+                          </InArgument>
+                          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">
+                            <mva:VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:Object)" ExpressionText="dictConfig" />
+                          </InArgument>
+                          <OutArgument x:TypeArguments="x:Int32" x:Key="out_StatusCode_ReadTicket">
+                            <mva:VisualBasicReference x:TypeArguments="x:Int32" ExpressionText="StatusCode_ReadTicket" />
+                          </OutArgument>
+                          <OutArgument x:TypeArguments="x:Int32" x:Key="out_StatusCode_CloseTicket">
+                            <mva:VisualBasicReference x:TypeArguments="x:Int32" ExpressionText="StatusCode_CloseTicket" />
+                          </OutArgument>
+                          <InArgument x:TypeArguments="x:String" x:Key="in_Language_Load">
+                            <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="Severity_LoadSingle" />
+                          </InArgument>
+                          <OutArgument x:TypeArguments="x:Int32" x:Key="out_StatusCodeReports">
+                            <mva:VisualBasicReference x:TypeArguments="x:Int32" ExpressionText="StatusCodeReports" />
+                          </OutArgument>
                           <OutArgument x:TypeArguments="s:DateTime" x:Key="out_DateDispatchTicket" />
                           <OutArgument x:TypeArguments="x:Int32" x:Key="out_KeyDispatchTicket" />
                           <OutArgument x:TypeArguments="x:String" x:Key="out_UserNameDispatchTicket" />
-                          <InArgument x:TypeArguments="s:DateTime" x:Key="in_CreateDateProcess">[out_CreateDateLoadSingle]</InArgument>
+                          <InArgument x:TypeArguments="s:DateTime" x:Key="in_CreateDateProcess">
+                            <mva:VisualBasicValue x:TypeArguments="s:DateTime" ExpressionText="out_CreateDateLoadSingle" />
+                          </InArgument>
                           <OutArgument x:TypeArguments="s:DateTime" x:Key="out_DateAssignTicket" />
                           <OutArgument x:TypeArguments="x:Int32" x:Key="out_KeyAssignTicket" />
                           <OutArgument x:TypeArguments="x:String" x:Key="out_UserNameAssignTicket" />
                           <OutArgument x:TypeArguments="x:String" x:Key="out_OwnerAssignTicket" />
-                          <OutArgument x:TypeArguments="s:DateTime" x:Key="out_DateEscalationTicket" />
-                          <OutArgument x:TypeArguments="x:Int32" x:Key="out_KeyEscalationTicket" />
-                          <OutArgument x:TypeArguments="x:String" x:Key="out_FromEscalationTicket" />
-                          <OutArgument x:TypeArguments="x:String" x:Key="out_ToEscalationTicket" />
                           <OutArgument x:TypeArguments="x:String" x:Key="out_UserNameEscalationTicket" />
-                          <InArgument x:TypeArguments="s:DateTime" x:Key="in_BOTDateReports">[out_DateAllTickets]</InArgument>
-                          <InArgument x:TypeArguments="x:Int32" x:Key="in_AmountTicketsReports">[out_MatchedCountAllTickets]</InArgument>
+                          <InArgument x:TypeArguments="s:DateTime" x:Key="in_BOTDateReports">
+                            <mva:VisualBasicValue x:TypeArguments="s:DateTime" ExpressionText="out_DateAllTickets" />
+                          </InArgument>
+                          <InArgument x:TypeArguments="x:Int32" x:Key="in_AmountTicketsReports">
+                            <mva:VisualBasicValue x:TypeArguments="x:Int32" ExpressionText="out_MatchedCountAllTickets" />
+                          </InArgument>
+                          <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_DataTableEscalationTicket" />
                         </ui:InvokeWorkflowFile.Arguments>
                       </ui:InvokeWorkflowFile>
                       <ui:AddLogFields DisplayName="Add log fields" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="AddLogFields_27">
@@ -831,7 +849,9 @@
               </ui:RemoveLogFields>
             </Sequence>
           </Transition.Action>
-          <Transition.Condition>[dictCurrentTransactionItem &gt; 0]</Transition.Condition>
+          <Transition.Condition>
+            <mva:VisualBasicValue x:TypeArguments="x:Boolean" ExpressionText="dictCurrentTransactionItem &gt; 0" sap2010:WorkflowViewState.IdRef="VisualBasicValue`1_3" />
+          </Transition.Condition>
         </Transition>
         <Transition DisplayName="Should Stop" sap:VirtualizedContainerService.HintSize="479,756" sap2010:WorkflowViewState.IdRef="Transition_12">
           <sap:WorkflowViewStateService.ViewState>
@@ -1006,9 +1026,9 @@
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
           <Transition.To>
-            <State x:Name="__ReferenceID3" sap2010:Annotation.AnnotationText="Logic required to fetch the next item(s) to be processed. Retrieve as many items as needed for processing." DisplayName="Fetch Next Transaction Items" sap:VirtualizedContainerService.HintSize="789,2562" sap2010:WorkflowViewState.IdRef="State_5">
+            <State x:Name="__ReferenceID3" sap2010:Annotation.AnnotationText="Logic required to fetch the next item(s) to be processed. Retrieve as many items as needed for processing." DisplayName="Fetch Next Transaction Items" sap:VirtualizedContainerService.HintSize="361,111" sap2010:WorkflowViewState.IdRef="State_5">
               <State.Entry>
-                <TryCatch sap:VirtualizedContainerService.HintSize="743,1986" sap2010:WorkflowViewState.IdRef="TryCatch_7">
+                <TryCatch sap:VirtualizedContainerService.HintSize="743,2080" sap2010:WorkflowViewState.IdRef="TryCatch_7">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -1016,13 +1036,13 @@
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
                   <TryCatch.Try>
-                    <Sequence sap:VirtualizedContainerService.HintSize="705,1737" sap2010:WorkflowViewState.IdRef="Sequence_28">
+                    <Sequence sap:VirtualizedContainerService.HintSize="705,1791" sap2010:WorkflowViewState.IdRef="Sequence_28">
                       <sap:WorkflowViewStateService.ViewState>
                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
                           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                         </scg:Dictionary>
                       </sap:WorkflowViewStateService.ViewState>
-                      <ui:AddLogFields sap2010:Annotation.AnnotationText="Add logF_StateName field" DisplayName="Add log fields" sap:VirtualizedContainerService.HintSize="663,49" sap2010:WorkflowViewState.IdRef="AddLogFields_5">
+                      <ui:AddLogFields sap2010:Annotation.AnnotationText="Add logF_StateName field" DisplayName="Add log fields" sap:VirtualizedContainerService.HintSize="663,53" sap2010:WorkflowViewState.IdRef="AddLogFields_5">
                         <ui:AddLogFields.Fields>
                           <InArgument x:TypeArguments="x:String" x:Key="logF_StateName">Fetch Next Transaction Items</InArgument>
                         </ui:AddLogFields.Fields>
@@ -1058,7 +1078,7 @@
                         </Assign.Value>
                       </Assign>
                       <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="663,91" sap2010:WorkflowViewState.IdRef="LogMessage_69" Level="Info" Message="[&quot;iTransactionItemsProcessedCount =&quot; +iTransactionItemsProcessedCount.ToString]" />
-                      <If Condition="[iTransactionItemsProcessedCount = 0]" sap:VirtualizedContainerService.HintSize="663,546" sap2010:WorkflowViewState.IdRef="If_12">
+                      <If Condition="[iTransactionItemsProcessedCount = 0]" sap:VirtualizedContainerService.HintSize="663,596" sap2010:WorkflowViewState.IdRef="If_12">
                         <sap:WorkflowViewStateService.ViewState>
                           <scg:Dictionary x:TypeArguments="x:String, x:Object">
                             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -1066,26 +1086,26 @@
                           </scg:Dictionary>
                         </sap:WorkflowViewStateService.ViewState>
                         <If.Then>
-                          <Sequence sap:VirtualizedContainerService.HintSize="418,398" sap2010:WorkflowViewState.IdRef="Sequence_63">
+                          <Sequence sap:VirtualizedContainerService.HintSize="418,448" sap2010:WorkflowViewState.IdRef="Sequence_63">
                             <sap:WorkflowViewStateService.ViewState>
                               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                               </scg:Dictionary>
                             </sap:WorkflowViewStateService.ViewState>
-                            <Sequence sap:VirtualizedContainerService.HintSize="376,306" sap2010:WorkflowViewState.IdRef="Sequence_62">
+                            <Sequence sap:VirtualizedContainerService.HintSize="376,356" sap2010:WorkflowViewState.IdRef="Sequence_62">
                               <sap:WorkflowViewStateService.ViewState>
                                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                 </scg:Dictionary>
                               </sap:WorkflowViewStateService.ViewState>
-                              <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke AllTickets workflow" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_19" UnSafe="False" WorkflowFileName="Dispacher_Performer\AllTickets.xaml">
+                              <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke AllTickets workflow" sap:VirtualizedContainerService.HintSize="334,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_19" UnSafe="False" WorkflowFileName="Dispacher_Performer\AllTickets.xaml">
                                 <ui:InvokeWorkflowFile.Arguments>
                                   <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_DicConfig">[dictConfig]</InArgument>
                                   <OutArgument x:TypeArguments="x:Int32" x:Key="out_MatchedCountAllTickets">[out_MatchedCountAllTickets]</OutArgument>
                                   <OutArgument x:TypeArguments="s:DateTime" x:Key="out_DateAllTickets">[out_DateAllTickets]</OutArgument>
                                 </ui:InvokeWorkflowFile.Arguments>
                               </ui:InvokeWorkflowFile>
-                              <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke Ticketing Console workflow" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_15" UnSafe="False" WorkflowFileName="Dispacher_Performer/TicketSearch.xaml">
+                              <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke Ticketing Console workflow" sap:VirtualizedContainerService.HintSize="334,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_15" UnSafe="False" WorkflowFileName="Dispacher_Performer/TicketSearch.xaml">
                                 <ui:InvokeWorkflowFile.Arguments>
                                   <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_DicConfig">[dictConfig]</InArgument>
                                   <OutArgument x:TypeArguments="x:Int32" x:Key="out_TicketsIdTicketSearch">[out_TicketsIdTicketSearch]</OutArgument>
@@ -1288,7 +1308,9 @@
                       </ui:RemoveLogFields>
                     </Sequence>
                   </Transition.Action>
-                  <Transition.Condition>[exTechnicalError IsNot Nothing Or iTransactionItemsProcessedCount &gt;= TicketsCount]</Transition.Condition>
+                  <Transition.Condition>
+                    <mva:VisualBasicValue x:TypeArguments="x:Boolean" ExpressionText="exTechnicalError IsNot Nothing Or iTransactionItemsProcessedCount &gt;= TicketsCount" sap2010:WorkflowViewState.IdRef="VisualBasicValue`1_1" />
+                  </Transition.Condition>
                 </Transition>
                 <Transition DisplayName="Items Available" sap:VirtualizedContainerService.HintSize="479,756" sap2010:WorkflowViewState.IdRef="Transition_10">
                   <sap:WorkflowViewStateService.ViewState>
@@ -1337,7 +1359,9 @@
                       </ui:RemoveLogFields>
                     </Sequence>
                   </Transition.Action>
-                  <Transition.Condition>[TicketsCount &gt; 0]</Transition.Condition>
+                  <Transition.Condition>
+                    <mva:VisualBasicValue x:TypeArguments="x:Boolean" ExpressionText="TicketsCount &gt; 0" sap2010:WorkflowViewState.IdRef="VisualBasicValue`1_2" />
+                  </Transition.Condition>
                 </Transition>
               </State.Transitions>
             </State>

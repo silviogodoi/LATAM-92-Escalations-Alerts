@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="ProcessTransaction" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="ProcessTransaction" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="in_TransactionItem" Type="InArgument(x:Int32)" />
     <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
@@ -14,13 +14,10 @@
     <x:Property Name="out_KeyAssignTicket" Type="OutArgument(x:Int32)" />
     <x:Property Name="out_UserNameAssignTicket" Type="OutArgument(x:String)" />
     <x:Property Name="out_OwnerAssignTicket" Type="OutArgument(x:String)" />
-    <x:Property Name="out_DateEscalationTicket" Type="OutArgument(s:DateTime)" />
-    <x:Property Name="out_KeyEscalationTicket" Type="OutArgument(x:Int32)" />
-    <x:Property Name="out_FromEscalationTicket" Type="OutArgument(x:String)" />
-    <x:Property Name="out_ToEscalationTicket" Type="OutArgument(x:String)" />
     <x:Property Name="out_UserNameEscalationTicket" Type="OutArgument(x:String)" />
     <x:Property Name="in_BOTDateReports" Type="InArgument(s:DateTime)" />
     <x:Property Name="in_AmountTicketsReports" Type="InArgument(x:Int32)" />
+    <x:Property Name="out_DataTableEscalationTicket" Type="OutArgument(sd:DataTable)" />
   </x:Members>
   <this:ProcessTransaction.in_BOTDateReports>
     <InArgument x:TypeArguments="s:DateTime" />
@@ -31,10 +28,10 @@
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1154,1192</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1154,1341</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ProcessTransaction_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
-    <scg:List x:TypeArguments="x:String" Capacity="21">
+    <scg:List x:TypeArguments="x:String" Capacity="42">
       <x:String>System.Activities</x:String>
       <x:String>System.Activities.Statements</x:String>
       <x:String>System.Activities.Expressions</x:String>
@@ -56,6 +53,8 @@
       <x:String>UiPath.Core</x:String>
       <x:String>UiPath.Core.Activities</x:String>
       <x:String>System.Windows.Markup</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -88,10 +87,11 @@
       <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
       <AssemblyReference>UiPath.OCR.Activities.Design</AssemblyReference>
       <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
-      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="" DisplayName="ProcessTransaction" sap:VirtualizedContainerService.HintSize="377,1127" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="" DisplayName="ProcessTransaction" sap:VirtualizedContainerService.HintSize="377,1276" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:Int32" Name="StatusCodeReadTicket" />
       <Variable x:TypeArguments="x:Int32" Name="TicketsIdReadTicket" />
@@ -119,35 +119,18 @@
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
     <ui:LogMessage DisplayName="Log message" sap:VirtualizedContainerService.HintSize="335,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Starting&quot;]" />
-    <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke DispatchTicket workflow" sap:VirtualizedContainerService.HintSize="335,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Dispacher_Performer\DispatchTicket.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke DispatchTicket workflow" sap:VirtualizedContainerService.HintSize="335,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Dispacher_Performer\DispatchTicket.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_DicConfig">
-          <mva:VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:Object)" ExpressionText="in_Config" />
-        </InArgument>
-        <InArgument x:TypeArguments="x:Int32" x:Key="in_TicketsIdDispatchTicket">
-          <mva:VisualBasicValue x:TypeArguments="x:Int32" ExpressionText="in_TransactionItem" />
-        </InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_ActionDispatchTicket">
-          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_Config(&quot;ActionDispatchTicket&quot;).ToString" />
-        </InArgument>
-        <OutArgument x:TypeArguments="s:DateTime" x:Key="out_DateDispatchTicket">
-          <mva:VisualBasicReference x:TypeArguments="s:DateTime" ExpressionText="out_DateDispatchTicket" />
-        </OutArgument>
-        <OutArgument x:TypeArguments="x:Int32" x:Key="out_KeyDispatchTicket">
-          <mva:VisualBasicReference x:TypeArguments="x:Int32" ExpressionText="out_KeyDispatchTicket" />
-        </OutArgument>
-        <OutArgument x:TypeArguments="x:String" x:Key="out_UserNameDispatchTicket">
-          <mva:VisualBasicReference x:TypeArguments="x:String" ExpressionText="out_UserNameDispatchTicket" />
-        </OutArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_PatternDispatchTicket">
-          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_Config(&quot;PatternDispatchTicket&quot;).ToString" />
-        </InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_WorkGroupDispatchTicket">
-          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_Config(&quot;WorkGroupDispatchTicket&quot;).ToString" />
-        </InArgument>
+        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_DicConfig">[in_Config]</InArgument>
+        <InArgument x:TypeArguments="x:Int32" x:Key="in_TicketsIdDispatchTicket">[in_TransactionItem]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_ActionDispatchTicket">[in_Config("ActionDispatchTicket").ToString]</InArgument>
+        <OutArgument x:TypeArguments="s:DateTime" x:Key="out_DateDispatchTicket">[out_DateDispatchTicket]</OutArgument>
+        <OutArgument x:TypeArguments="x:Int32" x:Key="out_KeyDispatchTicket">[out_KeyDispatchTicket]</OutArgument>
+        <OutArgument x:TypeArguments="x:String" x:Key="out_UserNameDispatchTicket">[out_UserNameDispatchTicket]</OutArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_WorkGroupDispatchTicket">[in_Config("WorkGroupDispatchTicket").ToString]</InArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke AssignTicket workflow" sap:VirtualizedContainerService.HintSize="335,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Dispacher_Performer\AssignTicket.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke AssignTicket workflow" sap:VirtualizedContainerService.HintSize="335,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Dispacher_Performer\AssignTicket.xaml">
       <ui:InvokeWorkflowFile.Arguments>
         <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_DicConfig">[in_Config]</InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_ActionAssignTicket">[in_Config("ActionAssignTicket").ToString]</InArgument>
@@ -160,56 +143,35 @@
         <OutArgument x:TypeArguments="x:String" x:Key="out_OwnerAssignTicket">[out_OwnerAssignTicket]</OutArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke EscalationTicket workflow" sap:VirtualizedContainerService.HintSize="335,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="Dispacher_Performer\EscalationTicket.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke EscalationTicket workflow" sap:VirtualizedContainerService.HintSize="335,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Dispacher_Performer\EscalationTicket.xaml">
       <ui:InvokeWorkflowFile.Arguments>
         <InArgument x:TypeArguments="x:Int32" x:Key="in_TicketsIdEscalationTicket">[in_TransactionItem]</InArgument>
         <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_DicConfigEscalationTicket">[in_Config]</InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_ActionEscalationTicket">[in_Config("ActionEscalationTicket").ToString]</InArgument>
-        <OutArgument x:TypeArguments="s:DateTime" x:Key="out_DateEscalationTicket">[out_DateEscalationTicket]</OutArgument>
-        <OutArgument x:TypeArguments="x:Int32" x:Key="out_KeyEscalationTicket">[out_KeyEscalationTicket]</OutArgument>
-        <OutArgument x:TypeArguments="x:String" x:Key="out_UserNameEscalationTicket">[out_UserNameEscalationTicket]</OutArgument>
-        <OutArgument x:TypeArguments="x:String" x:Key="out_FromEscalationTicket">[out_FromEscalationTicket]</OutArgument>
-        <OutArgument x:TypeArguments="x:String" x:Key="out_ToEscalationTicket">[out_ToEscalationTicket]</OutArgument>
+        <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_DataTableEscalationTicket">[out_DataTableEscalationTicket]</OutArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke Reports workflow" sap:VirtualizedContainerService.HintSize="335,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Dispacher_Performer/Reports.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Reports workflow" sap:VirtualizedContainerService.HintSize="335,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Dispacher_Performer/Reports.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <InArgument x:TypeArguments="x:String" x:Key="in_UserName">
-          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="out_UserNameDispatchTicket" />
-        </InArgument>
-        <InArgument x:TypeArguments="x:Int32" x:Key="in_TicketsIdReports">
-          <mva:VisualBasicValue x:TypeArguments="x:Int32" ExpressionText="in_TransactionItem" />
-        </InArgument>
-        <InArgument x:TypeArguments="s:DateTime" x:Key="in_CreateDateReports">
-          <mva:VisualBasicValue x:TypeArguments="s:DateTime" ExpressionText="in_CreateDateProcess" />
-        </InArgument>
-        <InArgument x:TypeArguments="s:DateTime" x:Key="in_DispatchDateReports">
-          <mva:VisualBasicValue x:TypeArguments="s:DateTime" ExpressionText="out_DateDispatchTicket" />
-        </InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_WorkbookPathReports">
-          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_Config(&quot;WorkbookPathReports&quot;).ToString" />
-        </InArgument>
-        <InArgument x:TypeArguments="s:DateTime" x:Key="in_AssignDateReports">
-          <mva:VisualBasicValue x:TypeArguments="s:DateTime" ExpressionText="out_DateAssignTicket" />
-        </InArgument>
-        <InArgument x:TypeArguments="s:DateTime" x:Key="in_EscalationDateReports">
-          <mva:VisualBasicValue x:TypeArguments="s:DateTime" ExpressionText="out_DateEscalationTicket" />
-        </InArgument>
-        <InArgument x:TypeArguments="s:DateTime" x:Key="in_BOTDateReports">
-          <mva:VisualBasicValue x:TypeArguments="s:DateTime" ExpressionText="in_BOTDateReports" />
-        </InArgument>
-        <InArgument x:TypeArguments="x:Int32" x:Key="in_AmountTicketsReports">
-          <mva:VisualBasicValue x:TypeArguments="x:Int32" ExpressionText="in_AmountTicketsReports" />
-        </InArgument>
-        <InArgument x:TypeArguments="x:Int32" x:Key="in_KeyDispatchTicketsReports">
-          <mva:VisualBasicValue x:TypeArguments="x:Int32" ExpressionText="out_KeyDispatchTicket" />
-        </InArgument>
-        <InArgument x:TypeArguments="x:Int32" x:Key="in_KeyAssignReports">
-          <mva:VisualBasicValue x:TypeArguments="x:Int32" ExpressionText="out_KeyAssignTicket" />
-        </InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_UserName">[out_UserNameDispatchTicket]</InArgument>
+        <InArgument x:TypeArguments="x:Int32" x:Key="in_TicketsIdReports">[in_TransactionItem]</InArgument>
+        <InArgument x:TypeArguments="s:DateTime" x:Key="in_CreateDateReports">[in_CreateDateProcess]</InArgument>
+        <InArgument x:TypeArguments="s:DateTime" x:Key="in_DispatchDateReports">[out_DateDispatchTicket]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_WorkbookPathReports">[in_Config("WorkbookPathReports").ToString]</InArgument>
+        <InArgument x:TypeArguments="s:DateTime" x:Key="in_AssignDateReports">[out_DateAssignTicket]</InArgument>
+        <InArgument x:TypeArguments="s:DateTime" x:Key="in_BOTDateReports">[in_BOTDateReports]</InArgument>
+        <InArgument x:TypeArguments="x:Int32" x:Key="in_AmountTicketsReports">[in_AmountTicketsReports]</InArgument>
+        <InArgument x:TypeArguments="x:Int32" x:Key="in_KeyDispatchTicketsReports">[out_KeyDispatchTicket]</InArgument>
+        <InArgument x:TypeArguments="x:Int32" x:Key="in_KeyAssignReports">[out_KeyAssignTicket]</InArgument>
+        <InArgument x:TypeArguments="sd:DataTable" x:Key="in_DataTableEscalationReports">[out_DataTableEscalationTicket]</InArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <ui:Comment sap:VirtualizedContainerService.HintSize="335,134" sap2010:WorkflowViewState.IdRef="Comment_1" Text="Perform necessary logic to process the current transaction item. Include any additional informational log messages to better indicate the steps occurring during processing." />
-    <ui:LogMessage DisplayName="Log message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Ending&quot;]" />
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke SMTP workflow" sap:VirtualizedContainerService.HintSize="335,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Dispacher_Performer\SMTP.xaml">
+      <ui:InvokeWorkflowFile.Arguments>
+        <scg:Dictionary x:TypeArguments="x:String, Argument" />
+      </ui:InvokeWorkflowFile.Arguments>
+    </ui:InvokeWorkflowFile>
+    <ui:Comment sap:VirtualizedContainerService.HintSize="335,131" sap2010:WorkflowViewState.IdRef="Comment_1" Text="Perform necessary logic to process the current transaction item. Include any additional informational log messages to better indicate the steps occurring during processing." />
+    <ui:LogMessage DisplayName="Log message" sap:VirtualizedContainerService.HintSize="335,91" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Ending&quot;]" />
   </Sequence>
 </Activity>
